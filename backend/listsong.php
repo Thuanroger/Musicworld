@@ -1,3 +1,6 @@
+<?php
+ include '../backend/dal/Song.php';
+?>
 <div class="container">
     <div class="row mb-5">
         <div class="col-lg-12 mx-auto">
@@ -59,7 +62,7 @@
                         <tbody>
 
                             <?php
-                            include '../backend/dal/Song.php';
+                            
                             $pageNo = 1;
                             $pageS = 1;
                             if (!empty($_POST['reset'])) {
@@ -74,36 +77,34 @@
 
                             for ($i = 0; $i < count($arr); $i++) {
                                 $obj = $arr[$i];
-                                $strTbl .= "<tr scope='row'>";
-                                $strTbl .= '<th scope="row">';
-                                $strTbl .= '<label class="control control--checkbox">';
-                                $strTbl .= '<input type="checkbox" />';
-                                $strTbl .= '<div class="control__indicator"></div>';
-                                $strTbl .= '</label>';
-                                $strTbl .= '</th>';
-                                $strTbl .= "<td>$obj->songId</td>";
-                                $strTbl .= "<td>$obj->songName</td>";
-                                $strTbl .= "<td>$obj->length</td>";
-                                $strTbl .= "<td>$obj->picture</td>";
-                                $strTbl .= "<td>$obj->urlSong</td>";
-                                $strTbl .= "<td>$obj->status</td>";
-                                $strTbl .= "<td>$obj->level</td>";
-                                $strTbl .= "<td>$obj->flag</td>";
-                                $strTbl .= "<td>$obj->description</td>";
-                                $strTbl .= "<td>
+                                ?>
+                                <tr scope='row'>
+                                <th scope="row">
+                                <label class="control control--checkbox">
+                            <input type="checkbox" />
+                           <div class="control__indicator"></div>
+                                </label>
+                             </th>
+                            <td> <?php echo $obj->songId ?></td>
+                                <td> <?php echo $obj->songName ?></td>
+                             <td> <?php echo $obj->length ?></td>
+                              <td>  <?php echo $obj->picture ?></td>
+                                <td> <?php echo $obj->urlSong ?></td>
+                         <td> <?php echo $obj->status ?></td>
+                              <td> <?php echo $obj->level ?></td>
+                            <td> <?php echo $obj->flag ?></td>
+                            <td> <?php echo $obj->description ?></td>
+                                <td>
                                                     <div style='display:flex;'>
-                                                        <button type='submit' class='btn btn-info mr-1' id='UpdateId'
-                                                            name='Updatef'><i class='i bi-arrow-repeat'></i></button>
+                                                       <a href="Admin.php?page=addsong&id=<?php echo $obj->songId; ?>" class='btn btn-info mr-1' id='UpdateId'><i class='i bi-arrow-repeat'></i></a>
                                                         <button type='submit' class='btn btn-danger' id='DeleteId'
                                                             name='Deletef'><i class='bi bi-trash'></i></button>
                                                     </div>
-                                                </td>";
-                                $strTbl .= '</tr>';
-//                                                 $GLOBALS['za'] =$obj->picture;
-                                $strTbl .= '<tr class="spacer"><td colspan="100"></td> </tr>';
-                            }
-                            echo $strTbl;
-                            ?>
+                                                </td>
+                              </tr>                                            
+                               <tr class="spacer"><td colspan="100"></td> </tr>
+                            <?php } ?>
+                           
 
                         </tbody>
                     </table>

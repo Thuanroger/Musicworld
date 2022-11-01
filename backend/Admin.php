@@ -165,9 +165,10 @@ if (session_id() === '')
                                 </li>
                             </ul>
                         </li>
-                        <li role="presentation"> <a href="#Portfolio" aria-controls="Portfolio" data-toggle="pill">Portfolio</a>
+                        <li role="presentation"> <a href="#Portfolio" aria-controls="Portfolio" data-toggle="">Portfolio</a>
                         </li>
-                        <li role="presentation"> <a href="#Contact" aria-controls="Contact" data-toggle="pill">Contact</a>
+                        
+                        <li role="presentation"> <a href="#Contact" aria-controls="Contact" data-toggle="">Contact</a>
                         </li>
                     </ul>
 
@@ -211,9 +212,20 @@ if (session_id() === '')
                     <li>
                         <a href="#" class="download">MusicWorld.com</a>
                     </li>
-                    <li>
+                    <?php
+                    
+                      if (isset($_SESSION['userlogin'])) {
+                                echo  '  <li> <a href="../backend/loginstandand.php" class="article"><i class="bi bi-box-arrow-left mr-2"></i>Sign out</a>    </li>';
+                            } else {
+                                echo ' <li> <a href="../backend/loginstandand.php" class="article"><i class="bi bi-box-arrow-in-right mr-2"></i>Sign in</a>    </li>';
+                            }
+                            ?>
+<!--                    <li>
                         <a href="../backend/loginstandand.php" class="article"><i class="bi bi-box-arrow-left mr-2"></i>Sign out</a>
                     </li>
+                    <li>
+                        <a href="../backend/loginstandand.php" class="article"><i class="bi bi-box-arrow-left mr-2"></i>Sign int</a>
+                    </li>-->
                 </ul>
             </nav>
 

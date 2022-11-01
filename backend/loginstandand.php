@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
 session_start();
+
 function redirect($url, $statusCode = 303) {
-    
+
     header('Location: ' . $url, true, $statusCode);
     die();
 }
@@ -17,7 +18,7 @@ if (!empty($_POST['signin'])) {
     $obj = $check->getUserSystemwithpassword($u, $p);
     if (!empty($obj)) {
         $_SESSION['userlogin'] = $_POST['username'];
-        
+
         redirect('./Admin.php', $statusCode = 303);
     } else {
 //        echo "<script>alert('User available!');</script>";
@@ -39,7 +40,7 @@ if (!empty($_POST['signin'])) {
 
     </head>
     <body>
-         <div class="background-radial-gradient overflow-hidden">
+        <div class="background-radial-gradient overflow-hidden">
             <div class="overlay overflow-hidden">
                 <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
                     <div class="row gx-lg-5 align-items-center mb-5">
@@ -54,29 +55,29 @@ if (!empty($_POST['signin'])) {
                                 <br><strong><i>Dietrich Bonhoeffer </i></strong>
                             </p>
                         </div>
-                        
+
                         <div class=" col-lg-6 mb-5 mb-lg-0 position-relative">
                             <div class="card bg-glass" style="border-radius: 1rem;">
                                 <div class="card-body px-4 py-5 px-md-5">
-                               
+
                                     <form action='<?php echo $_SERVER['PHP_SELF'] ?>' method='POST' >
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                             <span class="h1 fw-bold mb-0">Logo</span>
                                         </div>
-                                      
-                                        
+
+
                                         <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; "><i class="bi bi-box-arrow-in-right"></i>
                                             Sign into your account</h3>
-                                          <?php
-                                        if  (!empty($_POST['signin'])) 
-                                        {
-                                            if(empty($obj)) {
-                                            echo  "<div id='resetalert' class='alert alert-danger bg-soft-danger border-0' role='alert'>
+                                        <?php
+                                        if (!empty($_POST['signin'])) {
+                                            if (empty($obj)) {
+                                                echo "<div id='resetalert' class='alert alert-danger bg-soft-danger border-0' role='alert'>
 
                     Wrong Username or Password.
                   </div>";
-                                        }}
+                                            }
+                                        }
                                         ?>
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for=""><strong>Username/Email address</strong></label>
@@ -95,11 +96,11 @@ if (!empty($_POST['signin'])) {
                                         </div>
                                         <a class="small text-muted" href="resetpassword.php" target='_self' style="text-decoration: none;">Forgot password?</a>
                                         <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="./singup.php" target='_self'
-                                            style="color: #393f81; text-decoration: none;">Sign up here</a></p>
+                                                                                                                  style="color: #393f81; text-decoration: none;">Sign up here</a></p>
                                         <a href="#" class="small text-muted">Terms of use.</a>
                                         <a href="#" class="small text-muted">Privacy policy</a>
                                     </form>
-                                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,16 +109,16 @@ if (!empty($_POST['signin'])) {
         </div>
 
         <script>
-           
+
             const togglePassword = document.querySelector('#togglePassword');
             const password = document.querySelector('#fpassword');
-            togglePassword.addEventListener('click', function (e) {   
-               const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-               password.setAttribute('type', type);
-            
+            togglePassword.addEventListener('click', function (e) {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+
                 this.classList.toggle('fa-eye-slash');
             });
-      
+
         </script>
     </body>
 </html>
