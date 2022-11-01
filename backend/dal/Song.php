@@ -103,6 +103,31 @@ class Song {
 		// Close the database connection.
 		$conn = NULL;
 	}
+        
+        public function updateSong1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`song`
+				SET		
+					`Flag` = :flag
+				WHERE	`SongId` = :songId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			":flag" => $this->flag,
+			":songId" => $this->songId,));
+
+		// Close the database connection.
+		$conn = NULL;
+                return true;
+	}
 
 	public static function deleteSong($songId) {
 		// Connect to database.

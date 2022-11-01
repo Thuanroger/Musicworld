@@ -1,5 +1,5 @@
 <?php
-    include '../backend/dal/Song.php';
+include '../backend/dal/Song.php';
 ?>
 <div class="container-fluid">
 
@@ -28,7 +28,7 @@
         <div class="row mb-5">
             <div class="col-lg-8 mx-auto">
                 <div class="p-5 rounded shadow"  style="border-radius: 1rem;background-color: rgba(255, 255, 255, 0.58);">
-                    <form action="Admin.php?page=addsong" method="POST" enctype="multipart/form-data">
+                    <form action="Admin.php?page=addsong&id=<?php echo $obj->songId; ?>" method="POST" enctype="multipart/form-data">
 
                         <label  class="fs-5 fw-bold text-secondary">SongName</label>
                         <div class="bg-light rounded rounded-3 mb-4">
@@ -65,7 +65,7 @@
                         </div>
                         <label  class="fs-5 round fw-bold text-secondary">Flag</label>
                         <div class="bg-light rounded rounded-3 mb-4">
-                            <input type="number" placeholder="" name="UrlSong" aria-describedby="button-addon2" value="<?php echo $obj->flag; ?>" class="form-control border-0">
+                            <input type="number" placeholder="" name="Flag" aria-describedby="button-addon2" value="<?php echo $obj->flag; ?>" class="form-control border-0">
                         </div>
                         <!-- <label  class="fs-5 fw-bold text-secondary">Status</label>
                         <div class="bg-light rounded-3 mb-4">
@@ -200,7 +200,7 @@
         <div class="row mb-5">
             <div class="col-lg-8 mx-auto">
                 <div class="p-5 rounded shadow"  style="border-radius: 1rem;background-color: rgba(255, 255, 255, 0.58);">
-                    <form action="Admin.php?page=addsong&id=<?php echo $obj->songId; ?>" method="POST" enctype="multipart/form-data">
+                    <form action="Admin.php?page=addsong" method="POST" enctype="multipart/form-data">
 
                         <label  class="fs-5 fw-bold text-secondary">SongName</label>
                         <div class="bg-light rounded rounded-3 mb-4">
@@ -266,8 +266,6 @@
 
 </div>
 <?php
-
-
 $message = '';
 $message2 = '';
 if (!empty($_POST['Insertf']) && $_POST['Insertf'] == 'Save') {
@@ -312,27 +310,19 @@ if (!empty($_POST['Insertf']) && $_POST['Insertf'] == 'Save') {
     }
 }
 
-
 echo $message;
-
-
 if (isset($_POST['Insertf']) && $_POST['Insertf'] == 'Save') {
     if (isset($_FILES['UrlSong']) && $_FILES['UrlSong']['error'] === UPLOAD_ERR_OK) {
-
         // Thong tin chi tiet cua file
         $fileTmpPath = $_FILES['UrlSong']['tmp_name'];
-
         echo $fileTmpPath;
         $fileName = $_FILES['UrlSong']['name'];
         $fileSize = $_FILES['UrlSong']['size'];
         $fileType = $_FILES['UrlSong']['type'];
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
-
         // thiet dat file name
         $newFileNamemp3 = md5(time() . $fileName) . '.' . $fileExtension;
-
-
         // kiem tra phan mo rong cua file
         $allowedfileExtensions = array('mp3');
 
@@ -349,20 +339,15 @@ if (isset($_POST['Insertf']) && $_POST['Insertf'] == 'Save') {
         } else {
             $message2 = 'Chi cho phep cac loai file: ' . implode(',', $allowedfileExtensions);
         }
-
-
         $path = $uploadFileDir . '/' . $newFileNamemp3;
     } else {
         $message2 = 'Co loi trong luc upload<br>';
         $message2 .= 'Error:' . $_FILES['UrlSong']['error'];
     }
 }
-
-
 //  echo $message;
 if (!empty($_POST['Insertf'])) {
     $son = new Song();
-
     $son->songName = $_POST['SongName'];
     $son->length = $_POST['Length'];
     $son->picture = "$newFileName";
@@ -371,8 +356,6 @@ if (!empty($_POST['Insertf'])) {
     $son->flag = $_POST['Flag'];
     $son->description = $_POST['Description'];
     $son->addSong();
-    echo '<script>alert("Update success.")</script>';
-} else {
-    echo '<script>alert("Update faild.")</script>';
+    echo '<script>alert("Save success.")</script>';
 }
 ?>

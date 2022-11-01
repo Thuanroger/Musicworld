@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify | Search</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="search.css">
+<link rel = "icon" type = "image/png" href = "/assets/iconspoti.png">
+
+
+</head>
+<body>
+     
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    
+                  <!-- SIDEBAR -->
+                  <div class="col-2 d-none d-xl-block">
+                    <div class="row">
+                        <div class="side-bar col-12 px-0">
+                            <a href="../index.html"><img class="spotify-logo" src="../logo.svg" alt="sidebar-logo"></a>
+                            
+                            <a href="../index.html" class="d-flex py-2">
+                                <i class="bi bi-house-door mx-3"></i>
+                                <p>Home</p>
+                            </a> 
+                            
+                            <a href="../genres/genres.html" class="d-flex py-2">
+                                <i class="bi bi-collection-play mx-3"></i>
+                                <p>Music type</p>
+                            </a> 
+
+                            <a href="../albums/albums.html" class="d-flex py-2">
+                                <i class="bi bi-vinyl mx-3"></i>
+                                <p>Albums</p>
+                            </a> 
+
+                            <a href="../artists/artists.html" class="d-flex py-2">
+                                <i class="bi bi-music-note-beamed mx-3"></i>
+                                <p>Artists</p>
+                            </a> 
+
+
+                            <a href="./profile.html" class="d-flex py-2">
+                                <i class="bi bi-person-circle mx-3"></i>
+                                <p>Account</p>
+                            </a> 
+                            
+                            <hr class="border-secondary">
+                        </div>
+                    </div>
+                </div>
+                <!-- SIDEBAR ENDS HERE -->
+
+                <!-- SMALLER SIDEBAR (ICONS) -->
+
+                <div class="col-2 d-none d-lg-block d-xl-none">
+                    <div class="row">
+                        <div class="side-bar col-12 text-light px-0">
+                            <a href="../index.html"><img class="spotify-logo" src="../assets/spotify-logo.png" alt="sidebar-logo"></a>
+                            
+                            <a href="../index.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-house-door"></i>
+                                <p class="mx-0">Home</p>
+                            </a> 
+                            
+                            <a href="../genres/genres.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-collection-play"></i>
+                                <p class="mx-0">Your Library</p>
+                            </a> 
+
+                            <a href="../albums/albums.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-vinyl"></i>
+                                <p class="mx-0">Albums</p>
+                            </a> 
+
+                            <a href="../artists/artists.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-music-note-beamed"></i>
+                                <p class="mx-0">Artists</p>
+                            </a> 
+
+                            <a href="../favourites/favourites.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-heart-fill"></i>
+                                <p class="mx-0">Liked Songs</p>
+                            </a> 
+
+                            <a href="./profile.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-person-circle mx-3"></i>
+                                <p>Account</p>
+                            </a> 
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMALL SIDEBAR ENDS HERE -->
+
+    
+                    <!-- REMAINING PAGE CONTENT GOES INSIDE COL-10 -->
+                   <div class="col-12 col-lg-10">
+
+                       
+                       <div class="row">
+                           <div class="col-12">
+                               <h1 class="text-center text-success mt-3">Search Music</h1>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="input-group my-3 ">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text bg-dark" id="basic-addon1"><i class="bi bi-search text-white"></i></span>
+                                    </div>
+                                    <input type="text" name="q" class="form-control bg-dark text-white" placeholder="Songs, Artists, Albums" id="song-search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" id="search-btn">Search</button>
+                                      </div>
+                                  </div>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <h4 class="my-3" id="search-results"></h4>
+                            </div>
+
+                        </div>
+
+                        <div class="row d-flex justify-content-center main-page-content" id="show-results-container">
+
+                                <div class="col-12">
+    
+                                    <div class="d-flex justify-content-center" id="search-everything">
+    
+                                        <div class="search-card d-flex" style="background-color: rgb(17, 253, 253);">
+                                            <h4 class="search m-3 d-inline">Podcasts</h4>
+    
+                                            <div class="d-flex cardimg"><img src="/assets/cards/1.jpg"
+                                                    class="search-img shadow-lg" alt=""></div>
+                                        </div>
+                                         <div class="search-card d-flex" style="background-color: gray;">
+                                            <h4 class="search m-3 d-inline">Lists</h4>
+    
+                                            <div class="d-flex cardimg"><img src="/assets/cards/2.jpg"
+                                                    class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    <div class="search-card d-flex" style="background-color: blue;">
+                                        <h4 class="search m-3 d-inline">Hits</h4>
+    
+                                        <div class="d-flex cardimg"><img src="/assets/cards/3.jpg"
+                                                class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    <div class="search-card d-flex" style="background-color: rgb(153, 63, 189);">
+                                        <h4 class="search m-3 d-inline">New</h4>
+    
+                                        <div class="d-flex cardimg"><img src="/assets/cards/4.jpg"
+                                                class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    <div class="search-card d-flex" style="background-color: rgb(255, 94, 0);">
+                                        <h4 class="search m-3 d-inline">Explore</h4>
+    
+                                        <div class="d-flex cardimg"><img src="/assets/cards/6.jpg"
+                                                class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    <div class="search-card d-flex" style="background-color: rgb(18, 54, 20);">
+                                        <h4 class="search m-3 d-inline">Concerts</h4>
+    
+                                        <div class="d-flex cardimg"><img src="/assets/cards/7.jpg"
+                                                class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    <div class="search-card d-flex" style="background-color: rgb(167, 167, 64);">
+                                        <h4 class="search m-3 d-inline">Pop</h4>
+    
+                                        <div class="d-flex cardimg"><img src="/assets/cards/8.jpg"
+                                                class="search-img shadow-lg" alt=""></div>
+                                    </div>
+                                    
+                               
+    
+
+                    </div>
+        
+                </div>
+
+                            
+                        </div>
+
+                        <div class="row music-controls">
+
+                            <div class="col-10 col-lg-4">
+                                
+                                <div class="song-info-footer d-flex justify-content-center justify-content-lg-start">
+                                    <img class="d-none d-xl-block" src="" alt="" id="albumImg">
+                                    <div class="d-flex flex-column">
+                                        <p class="ml-3 mb-0 font-weight-bold" id="songTitle"></p>
+                                        <p class="ml-3 light-gray-text smaller-text mb-0" id="songArtist"></p>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                    
+                            <div class="col-2 d-lg-none">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                    
+                            <div class="col-3 d-lg-none nav-bar">
+                                <a href="../index.html" class="d-flex selected flex-column justify-content-center align-items-center py-2">
+                                    <i class="bi bi-house-door mx-3"></i>
+                                    <p class="d-none d-sm-block mb-0">Home</p>
+                                </a> 
+                            </div>
+                    
+                            <div class="col-3 d-lg-none nav-bar">
+                                <a href="#" class="d-flex flex-column justify-content-center align-items-center py-2">
+                                    <i class="bi bi-collection-play mx-3"></i>
+                                    <p class="d-none d-sm-block mb-0">Your Library</p>
+                                </a> 
+                            </div>
+                    
+                            <div class="col-3 d-lg-none nav-bar">
+                                <a href="./albums.html" class="d-flex flex-column justify-content-center align-items-center py-2">
+                                    <i class="bi bi-vinyl mx-3"></i>
+                                    <p class="d-none d-sm-block mb-0">Albums</p>
+                                </a> 
+                            </div>
+                    
+                            <div class="col-3 d-lg-none nav-bar">
+                                <a href="../artists/artists.html" class="d-flex flex-column justify-content-center align-items-center py-2">
+                                    <i class="bi bi-music-note-beamed mx-3"></i>
+                                    <p class="d-none d-sm-block mb-0">Artists</p>
+                                </a>
+                            </div>
+                    
+                    
+                            <div class="col-12 col-lg-4 d-none d-lg-flex flex-column align-items-center">
+                                <div class="music-controls-section d-flex align-items-center">
+                                    <i class="bi bi-shuffle mx-3 light-gray-text"></i>
+                                    <i class="bi bi-skip-backward-fill mx-3 light-gray-text"></i>
+                                    <i class="bi bi-play-circle-fill mx-3" id="playPauseBtn"></i>
+                                    <i class="bi bi-skip-forward-fill mx-3 light-gray-text"></i>
+                                    <i class="bi bi-arrow-repeat mx-3 light-gray-text" id="refresh"></i>
+                                </div>  
+                                <div class="track-length d-flex align-items-center">
+                                    <p class="mb-0 mx-3" id="visibleTime">0:00</p>
+                                    <div class="track-bar"></div>
+                                    <audio src="" autoplay id="musicPlay"></audio>
+                                    <p class="mb-0 mx-3">0:30</p>
+                                </div>
+                            </div>
+                    
+                            <div class="col-12 col-lg-4 d-none d-lg-flex justify-content-end align-items-center">
+                                <i class="bi bi-laptop mx-2 light-gray-text"></i>
+                                <i class="bi bi-volume-up mx-2 light-gray-text"></i>
+                                <div class="volume-bar"></div>
+                            </div>
+                    
+                        </div>
+
+                    </div>
+
+                   </div>
+                    <!-- REMAING PAGE CONTENT ENDS HERE -->
+    
+                </div>
+            </div>
+        </div>
+
+
+
+    
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<!-- <script src="../script.js"></script> -->
+<script src="search.js" defer></script>
+</body>
+</html>

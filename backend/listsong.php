@@ -1,8 +1,9 @@
+
 <?php
- include '../backend/dal/Song.php';
+include '../backend/dal/Song.php';
 ?>
 <div class="container">
-    <div class="row mb-5">
+    <div class="row py-5">
         <div class="col-lg-12 mx-auto">
             <div class="p-5 rounded shadow "
                  style="border-radius: 1rem;background-color: rgba(255, 255, 255, 0.58);">
@@ -16,8 +17,7 @@
                         </div>
                     </div>
                 </div>
-
-                <form  class="ml-4"name="get_Song" action="<?php echo $_SERVER['PHP_SELF'] ?>?page=listsong" method="POST" enctype="multipart/form-data">
+                <form  class="col-lg-8"name="get_Song" action="<?php echo $_SERVER['PHP_SELF'] ?>?page=listsong" method="POST" enctype="multipart/form-data">
                     <div class="form-row mb-4 align-items-center">
                         <!--      <label class="fs-5 fw-bold text-secondary mr-0" for="inlineFormInput">Page No</label>-->
                         <div class="col-sm-4">
@@ -33,9 +33,6 @@
                         </div>
                     </div>
                 </form>
-
-
-
                 <div class="table-responsive custom-table-responsive">
 
                     <table class="table custom-table">
@@ -62,54 +59,55 @@
                         <tbody>
 
                             <?php
-                            
                             $pageNo = 1;
-                            $pageS = 1;
+                            $pageS = 4;
+
                             if (!empty($_POST['reset'])) {
                                 $pageNo = $_POST['PageNo'];
                                 $pageS = $_POST['PageSize'];
                             }
                             $getdb = new Song();
                             $arr = $getdb->getAllRecords($pageNo, $pageS, $totalRecords);
-                            $strTbl = "";
-
-                            $stt = 1;
+//                            $strTbl = "";
+//
+//                            $stt = 1;
 
                             for ($i = 0; $i < count($arr); $i++) {
                                 $obj = $arr[$i];
                                 ?>
                                 <tr scope='row'>
-                                <th scope="row">
-                                <label class="control control--checkbox">
-                            <input type="checkbox" />
-                           <div class="control__indicator"></div>
-                                </label>
-                             </th>
-                            <td> <?php echo $obj->songId ?></td>
-                                <td> <?php echo $obj->songName ?></td>
-                             <td> <?php echo $obj->length ?></td>
-                              <td>  <?php echo $obj->picture ?></td>
-                                <td> <?php echo $obj->urlSong ?></td>
-                         <td> <?php echo $obj->status ?></td>
-                              <td> <?php echo $obj->level ?></td>
-                            <td> <?php echo $obj->flag ?></td>
-                            <td> <?php echo $obj->description ?></td>
-                                <td>
-                                                    <div style='display:flex;'>
-                                                       <a href="Admin.php?page=addsong&id=<?php echo $obj->songId; ?>" class='btn btn-info mr-1' id='UpdateId'><i class='i bi-arrow-repeat'></i></a>
-                                                        <button type='submit' class='btn btn-danger' id='DeleteId'
-                                                            name='Deletef'><i class='bi bi-trash'></i></button>
-                                                    </div>
-                                                </td>
-                              </tr>                                            
-                               <tr class="spacer"><td colspan="100"></td> </tr>
-                            <?php } ?>
-                           
+                                    <th scope="row">
+                                        <label class="control control--checkbox">
+                                            <input type="checkbox" />
+                                            <div class="control__indicator"></div>
+                                        </label>
+                                    </th>
+                                    <td> <?php echo $obj->songId ?></td>
+                                    <td> <?php echo $obj->songName ?></td>
+                                    <td> <?php echo $obj->length ?></td>
+                                    <td>  <?php echo $obj->picture ?></td>
+                                    <td> <?php echo $obj->urlSong ?></td>
+                                    <td> <?php echo $obj->status ?></td>
+                                    <td> <?php echo $obj->level ?></td>
+                                    <td> <?php echo $obj->flag ?></td>
+                                    <td> <?php echo $obj->description ?></td>
+                                    <td>
+                                        <div style='display:flex;'>
+                                            <a href="Admin.php?page=addsong&id=<?php echo $obj->songId; ?>" class='btn btn-info mr-1' id='updatef'><i class='i bi-arrow-repeat'></i></a>
+                                            <a href="../backend/delete/delsong.php?id=<?php echo $obj->songId; ?>" class='btn btn-danger mr-1' id='deletef'><i class='bi bi-trash'></i></a>
+                                        </div>
+                                    </td>
+                                </tr>                                            
+                                <tr class="spacer"><td colspan="100"></td> </tr>
+<?php } ?>
+
 
                         </tbody>
                     </table>
 <?php
-echo "Page : " . $pageNo . " " . "Size: " . $pageS;
+if (!empty($_POST['reset'])) {
+    echo "Page : " . $pageNo . " " . "Size: " . $pageS;
+}
 ;
 ?>
                 </div>

@@ -18,7 +18,7 @@ if (session_id() === '')
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
               integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="../backend/css/admin.css">
+        <link rel="stylesheet" href="../backend/css/admin.css"/>
         <!-- <link rel="stylesheet" href="styledash.css"> -->
         <!-- Font Awesome JS -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
@@ -27,59 +27,7 @@ if (session_id() === '')
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
                 integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
-
-        <style>
-
-            .media-support-user-img img {     height: 40px;
-                                              width: 40px;
-                                              line-height: 40px; }
-            .order-card {
-                color: rgb(16, 14, 14);
-            }
-
-            .bg-c-blue {
-                background: linear-gradient(45deg,#4099ff,#73b4ff);
-            }
-
-            .bg-c-green {
-                background: linear-gradient(45deg,#2ed8b6,#59e0c5);
-            }
-
-            .bg-c-yellow {
-                background: linear-gradient(45deg,#FFB64D,#ffcb80);
-            }
-
-            .bg-c-pink {
-                background: linear-gradient(45deg,#FF5370,#ff869a);
-            }
-
-
-            .card {
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-                box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-                border: none;
-                margin-bottom: 30px;
-                -webkit-transition: all 0.3s ease-in-out;
-                transition: all 0.3s ease-in-out;
-            }
-
-            .card .card-block {
-                padding: 25px;
-            }
-
-            .order-card i {
-                font-size: 26px;
-            }
-
-            .f-left {
-                float: left;
-            }
-
-            .f-right {
-                float: right;
-            }
-        </style>
+        <link rel="stylesheet" href="../backend/css/db.css"/>
     </head>
 
     <body>
@@ -166,17 +114,11 @@ if (session_id() === '')
                             </ul>
                         </li>
                         <li role="presentation"> <a href="#Portfolio" aria-controls="Portfolio" data-toggle="">Portfolio</a>
-                        </li>
-                        
+                        </li>                   
                         <li role="presentation"> <a href="#Contact" aria-controls="Contact" data-toggle="">Contact</a>
                         </li>
                     </ul>
-
-
-
                 </div>
-
-
                 <ul class="list-unstyled components">
                     <p class="text-gray font-weight-bold text-uppercase px-3  pb-4 mb-0">Chart</p>
                     <li class="nav-item">
@@ -206,8 +148,6 @@ if (session_id() === '')
                         </a>
                     </li>
                 </ul>
-
-
                 <ul class="list-unstyled CTAs">
                     <li>
                         <a href="#" class="download">MusicWorld.com</a>

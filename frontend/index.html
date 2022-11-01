@@ -1,12 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Music app</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.2/css/all.css">
+    <link rel = "icon" type = "image/png" href = "./logo.svg">
+    <link rel="stylesheet" href="style.css">
+
 </head>
+    
 <body>
-    <h1>Thuan</h1>
+ 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <!-- SIDEBAR -->
+                <div class="col-2 d-none d-xl-block">
+                    <div class="row">
+                        <div class="side-bar col-12 px-0">
+                            <a href="index.html"><img class="spotify-logo" src="logo.svg" alt="sidebar-logo"></a>
+                            
+                            <a href="index.html" class="d-flex selected py-2">
+                                <i class="bi bi-house-door mx-3"></i>
+                                <p>Home</p>
+                            </a> 
+                            
+                            <a href="../frontend/genres/genres.html" class="d-flex py-2">
+                                <i class="bi bi-collection-play mx-3"></i>
+                                <p>Music Type</p>
+                            </a> 
+
+                            <a href="../frontend/albums/albums.html" class="d-flex py-2">
+                                <i class="bi bi-vinyl mx-3"></i>
+                                <p>Albums</p>
+                            </a> 
+
+                            <a href="../frontend/artists/artists.html" class="d-flex py-2">
+                                <i class="bi bi-music-note-beamed mx-3"></i>
+                                <p>Artists</p>
+                            </a> 
+
+                            <a href="../frontend/profile/profile.html" class="d-flex py-2">
+                                <i class="bi bi-person-circle mx-3"></i>
+                                <p>Account</p>
+                            </a> 
+
+                            <hr class="border-secondary">
+                            <div class="other-links d-flex flex-column">
+                                <a href="#news">News</a>
+                                <a href="#recently-played-h4">Recently Played</a>
+                                <a href="#moreofyoulike">More of what you like</a>
+                                <a href="#hits-h4">Hits</a>
+                                <a href="#the-best-of-2020-h4">The Best of 2020</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- SIDEBAR ENDS HERE -->
+
+                <!-- SMALLER SIDEBAR (ICONS) -->
+
+                <div class="col-2 d-none d-lg-block d-xl-none">
+                    <div class="row">
+                        <div class="side-bar col-12 text-light px-0">
+                            <a href="index.html"><img class="spotify-logo" src="./logo.svg" alt="sidebar-logo"></a>
+                            
+                            <a href="index.html" class="d-flex flex-column selected py-2 align-items-center justify-content-center">
+                                <i class="bi bi-house-door"></i>
+                                <p class="mx-0">Home</p>
+                            </a> 
+                           
+                            <a href="./genres/genres.html" class="d-flex flex-column  py-2 align-items-center justify-content-center">
+                                <i class="bi bi-collection-play"></i>
+                                <p class="mx-0">Your Library</p>
+                            </a> 
+
+                            <a href="./albums/albums.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-vinyl"></i>
+                                <p class="mx-0">Albums</p>
+                            </a> 
+
+                            <a href="./artists/artists.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-music-note-beamed"></i>
+                                <p class="mx-0">Artists</p>
+                            </a> 
+
+                            <a href="./favourites/favourites.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-heart-fill"></i>
+                                <p class="mx-0">Liked Songs</p>
+                            </a> 
+
+                            <a href="./profile/profile.html" class="d-flex flex-column py-2 align-items-center justify-content-center">
+                                <i class="bi bi-person-circle mx-3"></i>
+                                <p>Account</p>
+                            </a> 
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMALL SIDEBAR ENDS HERE -->
+
+
+                <!-- MAIN PAGE CONTENT  -->
+                <div class="col-12 col-lg-10 main-page-content">
+
+                    <div class="row">
+                        <div class="col-12 hp-hero pt-2">
+                            <div class="d-none d-md-flex justify-content-between">
+                                <div class="d-flex mb-3">
+                                    <div class="d-flex hp-hero-top circle-top mr-3">
+                                        <div class="triangle-top-l"></div>
+                                    </div>
+                                    <div class="d-flex hp-hero-top circle-top">
+                                        <div class="triangle-top-r"></div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="account">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm bg-black dropdown-toggle rounded-pill" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                            </svg> Your Name
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <p id="toggle-theme" class="mb-0">Change Theme</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1 class="text-center text-success mt-3">Search Music</h1>
+                                 </div>
+     
+                                 <div class="col-12">
+                                     <div class="input-group my-3 ">
+                                         <div class="input-group-prepend">
+                                          <div class="select-options">
+                                            <span class="input-group-text bg-dark" id="basic-addon1"><i class="bi bi-caret-down text-white"></i></span> 
+                                            <ul class="list">
+                                                <li class="options_Select">Song</li>
+                                                <li class="options_Select">Artists</li>
+                                                <li class="options_Select">Albums</li>
+                                            </ul>
+                                          </div>    
+                                         </div>
+                                         <input type="text" name="q" class="form-control bg-dark text-white input_field" placeholder="Songs, Artists, Albums" id="song-search">
+                                         <div class="input-group-append">
+                                           
+                                             <button class="btn btn-success" id="search-btn">  <i class="bi bi-search text-white"></i> Search</button>
+                                           </div>
+                                       </div>
+                                 </div>
+     
+                                 <div class="col-12 text-center">
+                                     <h4 class="my-3" id="search-results"></h4>
+                                 </div>
+     
+                             </div>
+
+                            <h3 id="good-morning-h3" class="text-center"><strong></strong></h3>
+
+                           
+                        
+                        </div>
+                    </div>
+
+                    <section class="slider_new" id="news">
+                        <h3 class="mb-3 fw-bold" >News</h3>
+            
+                        <div class="swiper-container">
+                          <div class="swiper-wrapper">
+            
+                            <div class="swiper-slide" style="background-image:url(assets/news/1.jpg)">
+                              <a href="https://open.spotify.com/album/3lZ0sW4znNieFHxGdyWXCj/" target="_blank"></a>
+                            </div>
+                            <div class="swiper-slide" style="background-image:url(assets/news/2.jpg)">
+                              <a href="https://open.spotify.com/album/3lZ0sW4znNieFHxGdyWXCj/" target="_blank"></a>
+                            </div>
+                            <div class="swiper-slide" style="background-image:url(assets/news/3.jpg)">
+                              <a href="https://open.spotify.com/album/3lZ0sW4znNieFHxGdyWXCj/" target="_blank"></a>
+                            </div>
+                            <div class="swiper-slide" style="background-image:url(assets/news/4.jpg)">
+                              <a href="https://open.spotify.com/album/3lZ0sW4znNieFHxGdyWXCj/" target="_blank"></a>
+                            </div>
+                            <div class="swiper-slide" style="background-image:url(assets/news/5.jpg)">
+                              <a href="https://open.spotify.com/album/3lZ0sW4znNieFHxGdyWXCj/" target="_blank"></a>
+                            </div>
+                          </div>
+                          <div class="swiper-pagination"></div>
+                        </div>
+                      </section>
+
+                    <div class="row" id="recentlyplayed">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3 mx-0">
+                                <h4 id="recently-played-h4">Recently played</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+                            <div class="row" id="recently-played-section">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- REMAING PAGE CONTENT ENDS HERE -->
+
+                    <div class="row" id="moreofyoulike">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3">
+                                <h4 id="more-of-what-you-like-h4">More of what you like</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+                            <div class="row" id="more-what-you-like">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row" id="hits">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3">
+                                <h4 id="hits-h4">Hits</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+                            <div class="row" id="hits-container">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row" id="bestof">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3">
+                                <h4 id="the-best-of-2020-h4">The best of 2022</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+
+                            <div class="row" id="best-of-2020">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row" id="jumpback">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3">
+                                <h4 id="jump-back-in-h4">Jump back in</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+
+                            <div class="row" id="jump-in-container">
+                            </div>
+
+                        </div>
+                        
+                    </div> -->
+
+                    <!-- <div class="row" id="fans">
+                        <div class="col-12 hp-sub-hero">
+
+                            <div class="d-flex justify-content-between mt-4 mb-3">
+                                <h4 id="for-fans-of-sanah-h4">For fans of Sanah</h4>
+                                <p class="hp-tag light-gray-text font-weight-bold">SEE ALL</p>
+                            </div>
+
+
+                            <div class="row" id="sanah-fans-container">
+                            </div>
+
+                        </div>
+
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="playerBar">
+
+            <div class="rangeBar">
+                <div class="currTime">00:00</div>
+                <!-- <div class="music_bar"><input type="range" name="songBar" id="songBar"></div> -->
+                <input type="range" step="1" class="seekbar" value="0"  oninput="handleSeekBar()">
+                <div class="durrTime">00:00</div>
+            </div>  
+            <audio id="songFile"></audio>
+            <div class="playerBar_item">
+                <div class="playerBar_item-info">
+                    <div class="playerBar_item-img"><img class="playerBar_item-img--thumb" alt=""></div>
+                        <div class="playerBar_item-name">
+                            <div class="playerBar_item-name--nameSong">Chac ai do se ve</div>
+                            <div class="playerBar_item-name--nameArtist">Son Tung</div>
+                        </div>
+                </div>
+                <div class="playerBar_item-action">
+                    <div class="random"><i class="fa-light fa-shuffle"></i></div>
+                    <div class="back playerBar_item-action--size"><i class="fa-solid fa-backward-fast"></i></div>
+                    <div id="pause" class="pause playerBar_item-action--pausesize"><i class="fa-solid fa-circle-play"></i></div>
+                    <div class="next playerBar_item-action--size"><i class="fa-solid fa-forward-fast"></i></div>   
+                    <div class="replay"><i class="fa-light fa-arrows-repeat"></i></div>
+                </div>
+                <div class="playerBar_item-vol">
+                    <div class="playerBar_item-vol--icon" onclick="muteVol()"><i class="fa-solid fa-volume-high"></i></div>
+                    <div class="playerBar_item-vol--bar"><input type="range" name="" id="volRange" onchange="changevolume(this.value)"></div>
+                </div>
+            </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        let select = document.querySelector('.select-options');
+        let list = document.querySelector('.list');
+        let options = document.querySelectorAll('.options_Select');
+        let inputfield = document.querySelector('.input_field');
+
+        select.onclick = function() {
+            list.classList.toggle('open');
+        }
+
+        for(option of options) {
+            option.onclick = function(){
+                inputfield.placeholder = "Search In " + this.innerHTML;
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+    <script src="functionScript.js"></script>
 </body>
+
 </html>

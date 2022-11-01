@@ -1,8 +1,7 @@
 <?php
+function redirect($url, $statusCode = 303) {
 
-function redirect($url) {
-    header('Location: ', $url);
+    header('Location: ' . $url, true, $statusCode);
     die();
 }
-
 ?>
