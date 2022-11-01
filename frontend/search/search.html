@@ -27,14 +27,17 @@
                         <div class="side-bar col-12 px-0">
                             <a href="../index.html"><img class="spotify-logo" src="../logo.svg" alt="sidebar-logo"></a>
                             
-                            <a href="../index.html" class="d-flex py-2">
+                            <a href="index.html" class="d-flex selected py-2">
                                 <i class="bi bi-house-door mx-3"></i>
                                 <p>Home</p>
                             </a> 
-                            
+                            <a href="../search/search.html" class="d-flex py-2">
+                                <i class="bi bi-search mx-3"></i>
+                                <p>Search</p>
+                            </a> 
                             <a href="../genres/genres.html" class="d-flex py-2">
                                 <i class="bi bi-collection-play mx-3"></i>
-                                <p>Music type</p>
+                                <p>Music Type</p>
                             </a> 
 
                             <a href="../albums/albums.html" class="d-flex py-2">
@@ -47,11 +50,11 @@
                                 <p>Artists</p>
                             </a> 
 
-
-                            <a href="./profile.html" class="d-flex py-2">
+                            <a href="../profile/profile.html" class="d-flex py-2">
                                 <i class="bi bi-person-circle mx-3"></i>
                                 <p>Account</p>
                             </a> 
+
                             
                             <hr class="border-secondary">
                         </div>
@@ -108,25 +111,26 @@
 
                        
                        <div class="row">
-                           <div class="col-12">
-                               <h1 class="text-center text-success mt-3">Search Music</h1>
-                            </div>
+                           
 
                             <div class="col-12">
-                                <div class="input-group my-3 ">
+                                <div class="input-group my-3 bg-dark rounded rounded-3">
                                     <div class="input-group-prepend">
-                                      <span class="input-group-text bg-dark" id="basic-addon1"><i class="bi bi-search text-white"></i></span>
+                                     <div class="select-options">
+                                       <span class="input-group-text bg-dark border border-dark mr-1" id="basic-addon1"><i class="bi bi-caret-down text-white"></i></span> 
+                                       <ul class="list">
+                                           <li class="options_Select">Song</li>
+                                           <li class="options_Select">Artists</li>
+                                           <li class="options_Select">Albums</li>
+                                       </ul>
+                                     </div>    
                                     </div>
-                                    <input type="text" name="q" class="form-control bg-dark text-white" placeholder="Songs, Artists, Albums" id="song-search">
+                                    <input type="text" name="q" class="form-control bg-dark text-white input_field border border-dark" placeholder="Songs, Artists, Albums" id="song-search">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" id="search-btn">Search</button>
+                                      
+                                        <button class="btn btn-dark" id="search-btn">  <i class="bi bi-search text-white"></i> Search</button>
                                       </div>
                                   </div>
-                            </div>
-
-                            <div class="col-12 text-center">
-                                <h4 class="my-3" id="search-results"></h4>
-                            </div>
 
                         </div>
 

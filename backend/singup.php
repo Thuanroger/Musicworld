@@ -102,7 +102,7 @@
                                         <div class="form-outline form-group  mb-4">
                                             <label class="form-label" for="form2Example27">MiddleName</label>
                                             <input type="text" id="MiddleNameId"
-                                                class="form-control form-control-md" placeholder="Middlename"  required  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
+                                                class="form-control form-control-md" placeholder="Middlename"  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
                                                 <div id="CheckName" class="invalid-feedback" style="color:red ;"> It should only contain letters, can be several words with spaces, and has a minimum of three characters, but a maximum at top 30 characters.</div>
                                         </div>
                                         <div class="form-outline  form-group  mb-4">
