@@ -103,6 +103,7 @@ class Song {
 		// Close the database connection.
 		$conn = NULL;
 	}
+
         
         public function updateSong1() {
 		// Connect to database.
@@ -194,7 +195,25 @@ class Song {
 
 		return $song;
 	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`song`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
 	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 //             $sortColumn, $sortOrder
 		// Connect to database.
@@ -238,14 +257,19 @@ class Song {
 		$sql = "SELECT	`Description`,
 						`Flag`,
 						`Length`,
-						`Level`,
+						
+						(CASE
+   					 WHEN `Level` = '1' THEN 'Hot'
+   					 WHEN `Level` = '2' THEN 'Normal'
+    				ELSE 'NULL'	
+							END) AS LEV,
 						`Picture`,
 						`SongId`,
 						`SongName`,
 						`Status`,
 						`UrlSong`
 				FROM	`song`
-				
+				ORDER BY `SongId` DESC
 				LIMIT $start, $pageSize;";
 //                ORDER BY $sortColumn $sortOrder
 		// Prepare statement.
@@ -261,7 +285,7 @@ class Song {
 			$song->description = $row["Description"];
 			$song->flag = $row["Flag"];
 			$song->length = $row["Length"];
-			$song->level = $row["Level"];
+			$song->level = $row["LEV"];
 			$song->picture = $row["Picture"];
 			$song->songId = $row["SongId"];
 			$song->songName = $row["SongName"];

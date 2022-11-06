@@ -79,6 +79,35 @@ class Publishers {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updatePublishers2() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`publishers`
+				SET		
+						`Flag` = :flag
+					
+						
+				WHERE	`Publisherid` = :publisherid;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+		
+			":flag" => $this->flag,
+			":publisherid" => $this->publisherid
+
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
 
 	public static function deletePublishers($publisherid) {
 		// Connect to database.
@@ -138,17 +167,17 @@ class Publishers {
 		return $publishers;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`Publisherid`";
-		$sortColumns = Array("DESCRIPTION", "FLAG", "PUBLISHERID", "PUBLISHERNAME", "YEARPUB");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		// $defaultSortColumn = "`Publisherid`";
+		// $sortColumns = Array("DESCRIPTION", "FLAG", "PUBLISHERID", "PUBLISHERNAME", "YEARPUB");
+		// $sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
+		// $sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -183,7 +212,7 @@ class Publishers {
 						`PublisherName`,
 						`YearPub`
 				FROM	`publishers`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `Publisherid` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

@@ -79,6 +79,34 @@ class Songandartist {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateSongandartist2() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`songandartist`
+				SET		
+						`Flag` = :flag
+					
+				WHERE	`SaId` = :saId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+		
+			":flag" => $this->flag,
+			":saId" => $this->saId
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
+
 
 	public static function deleteSongandartist($saId) {
 		// Connect to database.
@@ -138,17 +166,14 @@ class Songandartist {
 		return $songandartist;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`SaId`";
-		$sortColumns = Array("ARTISTID", "DESCRIPTION", "FLAG", "SAID", "SONGID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -183,7 +208,7 @@ class Songandartist {
 						`SaId`,
 						`SongId`
 				FROM	`songandartist`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `SaId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

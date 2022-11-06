@@ -79,7 +79,34 @@ class Eventandmusic {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateEventandmusic1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
+		// Update query.
+		$sql = "UPDATE	`eventandmusic`
+				SET		
+						`Flag` = :flag
+						
+				WHERE	`EmId` = :emId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			
+			":emId" => $this->emId,
+			
+			":flag" => $this->flag
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
 	public static function deleteEventandmusic($emId) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
@@ -138,17 +165,14 @@ class Eventandmusic {
 		return $eventandmusic;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`EmId`";
-		$sortColumns = Array("DESCRIPTION", "EMID", "EVENTID", "FLAG", "MUSICID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -183,7 +207,7 @@ class Eventandmusic {
 						`Flag`,
 						`MusicId`
 				FROM	`eventandmusic`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `EmId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

@@ -1,11 +1,11 @@
 <?php
 include '../backend/dal/Song.php';
 ?>
-<div class="container-fluid">
+<div class="container">
 
 
     <div class="row py-5">
-        <div class="col-lg-10 mx-auto text-white text-center">
+        <div class="col-lg-7 mx-auto text-white text-center">
             <h1 class="display-4 fw-bold">Song</h1>
 
         </div>
@@ -75,14 +75,8 @@ include '../backend/dal/Song.php';
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="text" placeholder="" aria-describedby="button-addon2" value="<?php echo $obj->description; ?>" class="form-control border-0" name="Description"/>
                         </div>
-
-
                         <div class="text-center ">
                             <input type="submit" class="btn btn-success mb-1 w-25 fs-5 fw-bold" id="InsertId" name="updatef" value="Update"/>
-                            <!-- <button type="submit" class="btn btn-primary mb-1" id="UpdateId" name="Updatef">Update</button>
-                            <button type="submit" class="btn btn-secondary mb-1" id="ShowId" name="Showf">Show</button>
-                            <button type="button" class="btn btn-info mb-1" id="ResetId" name="Resetf">Reset</button>
-                            <button type="submit" class="btn btn-danger mb-1" id="DeleteId" name="Delete">Delete</button> -->
                         </div>
                     </form>
                 </div>
@@ -193,6 +187,7 @@ include '../backend/dal/Song.php';
             $son->description = $_POST['Description'];
             $son->updateSong();
             echo '<script>alert("Update success.")</script>';
+            header("Location: /Eproject/backend/Admin.php?page=listsong");
         }
         ?>
     <?php } else {
@@ -201,17 +196,14 @@ include '../backend/dal/Song.php';
             <div class="col-lg-8 mx-auto">
                 <div class="p-5 rounded shadow"  style="border-radius: 1rem;background-color: rgba(255, 255, 255, 0.58);">
                     <form action="Admin.php?page=addsong" method="POST" enctype="multipart/form-data">
-
                         <label  class="fs-5 fw-bold text-secondary">SongName</label>
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="text" placeholder="" name="SongName" value="" aria-describedby="button-addon2" class="form-control border-0">
                         </div>
-
                         <label  class="fs-5 fw-bold text-secondary">Length</label>
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="text" placeholder="" aria-describedby="button-addon2" name="Length" class="form-control border-0">
                         </div>
-
                         <label  class="fs-5 fw-bold text-secondary">Picture</label>
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="file" placeholder="" name="Picture" aria-describedby="button-addon2" class="form-control border-0">
@@ -220,11 +212,6 @@ include '../backend/dal/Song.php';
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="file" placeholder="" name="UrlSong" aria-describedby="button-addon2" class="form-control border-0">
                         </div>
-                        <!-- p-1 -->
-                        <!-- <label  class="fs-5 fw-bold text-secondary">Level</label>
-                        <div class="bg-light rounded-3 mb-4">
-                            <input type="text" placeholder="" aria-describedby="button-addon2" class="form-control border-0">
-                        </div> -->
                         <label  class="fs-5 fw-bold text-secondary">Level</label>
                         <div class="bg-light rounded rounded-3 mb-4">
 
@@ -239,22 +226,12 @@ include '../backend/dal/Song.php';
                         <div class="bg-light rounded rounded-3 mb-4">
                             <input type="number" placeholder="" name="Flag" aria-describedby="button-addon2" class="form-control border-0">
                         </div>
-                        <!-- <label  class="fs-5 fw-bold text-secondary">Status</label>
-                        <div class="bg-light rounded-3 mb-4">
-                            <textarea type="text" placeholder="" aria-describedby="button-addon2" class="form-control border-0"></textarea>
-                        </div> -->
                         <label  class="fs-5 fw-bold text-secondary">Description</label>
                         <div class="bg-light rounded rounded-3 mb-4">
                             <textarea type="text" placeholder="" aria-describedby="button-addon2" class="form-control border-0" name="Description"></textarea>
                         </div>
-
-
                         <div class="text-center ">
                             <input type="submit" class="btn btn-success mb-1 w-25 fs-5 fw-bold" id="InsertId" name="Insertf" value="Save"/>
-                            <!-- <button type="submit" class="btn btn-primary mb-1" id="UpdateId" name="Updatef">Update</button>
-                            <button type="submit" class="btn btn-secondary mb-1" id="ShowId" name="Showf">Show</button>
-                            <button type="button" class="btn btn-info mb-1" id="ResetId" name="Resetf">Reset</button>
-                            <button type="submit" class="btn btn-danger mb-1" id="DeleteId" name="Delete">Delete</button> -->
                         </div>
                     </form>
                 </div>
@@ -262,8 +239,6 @@ include '../backend/dal/Song.php';
         </div>
     <?php };
     ?>
-
-
 </div>
 <?php
 $message = '';
@@ -357,5 +332,6 @@ if (!empty($_POST['Insertf'])) {
     $son->description = $_POST['Description'];
     $son->addSong();
     echo '<script>alert("Save success.")</script>';
+    header("Location: /Eproject/backend/Admin.php?page=listsong");
 }
 ?>

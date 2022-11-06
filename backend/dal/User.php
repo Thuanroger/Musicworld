@@ -133,6 +133,34 @@ class User {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateUser1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`user`
+				SET		
+						`Flag` = :flag
+						
+				WHERE	`UserId` = :userId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+		
+			":flag" => $this->flag,
+			
+			":userId" => $this->userId
+		));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
 
 	public static function deleteUser($userId) {
 		// Connect to database.
@@ -209,20 +237,90 @@ class User {
 
 		return $user;
 	}
+	public static function getUserpassword($username,$pass) {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+		// Select query.
+		$sql = "SELECT	DATE_FORMAT(`Birthday`, '%m/%d/%Y %h:%i %p') AS Birthday,
+						`Description`,
+						`FirstName`,
+						`Flag`,
+						`Gmail`,
+						`LastName`,
+						`Level`,
+						`MiddleName`,
+						`Password`,
+						`Phone`,
+						`Picture`,
+						`Status`,
+						`UserId`,
+						`UserName`
+				FROM	`user`
+				WHERE	`UserName` = :username AND
+						`Password`= :password ;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(":username" => $username,
+							":password" => $pass));
+
+		// Fetch record.
+		$user = NULL;
+		if($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$user = new User();
+			$user->birthday = $row["Birthday"];
+			$user->description = $row["Description"];
+			$user->firstName = $row["FirstName"];
+			$user->flag = $row["Flag"];
+			$user->gmail = $row["Gmail"];
+			$user->lastName = $row["LastName"];
+			$user->level = $row["Level"];
+			$user->middleName = $row["MiddleName"];
+			$user->password = $row["Password"];
+			$user->phone = $row["Phone"];
+			$user->picture = $row["Picture"];
+			$user->status = $row["Status"];
+			$user->userId = $row["UserId"];
+			$user->userName = $row["UserName"];
+		}
+
+		// Close the database connection.
+		$conn = NULL;
+
+		return $user;
+	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`user`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`UserId`";
-		$sortColumns = Array("BIRTHDAY", "DESCRIPTION", "FIRSTNAME", "FLAG", "GMAIL", "LASTNAME", "LEVEL", "MIDDLENAME", "PASSWORD", "PHONE", "PICTURE", "STATUS", "USERID", "USERNAME");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
-
-		$pageNo = (int)$pageNo;
+		
 		$pageSize = (int)$pageSize;
 
 		$sql = "SELECT	COUNT(*) AS Count
@@ -264,7 +362,7 @@ class User {
 						`UserId`,
 						`UserName`
 				FROM	`user`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `UserId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

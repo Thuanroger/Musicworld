@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+function redirect($url, $statusCode = 303) {
+
+    header('Location: ' . $url, true, $statusCode);
+    die();
+}
+
+//        include '../backend/common/main.php';
+include '../backend/dal/User.php';
+
+if (!empty($_POST['signup'])) {
+    $user= $_POST['username'];
+    $pass =md5( $_POST['password']);
+    $phone = $_POST['phone'];
+    $gamil = $_POST['gmail'];
+    $birthday = $_POST['birthday'];
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $middleName = $_POST['middleName'];
+        $check = new User();
+        $obj = $check->getUserpassword($user, $pass);
+        if (!empty($obj)) {     
+            echo "<script>alert('This username already has a user. Please choose another username.');</script>";
+        } else {
+            $usernew = new User();
+            $usernew ->userName=$user;
+            $usernew ->password=$pass;
+            $usernew ->phone=$phone;
+            $usernew ->gamil=$gmail;
+            $usernew ->birthday=$birthday;
+            $usernew ->firstName=$firstName;
+            $usernew ->middleName=$middleName;
+            $usernew ->lastName=$lastName;
+             $usernew->addUser();
+             redirect('../frontend/index.html', $statusCode = 303);
+        }
+    
+    } else {
+//        echo "<script>alert('Sign up failed!');</script>";
+    }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +110,7 @@
                         <div class="card bg-glass" style="border-radius: 1rem;">
 <!--                            background-color: rgba(255, 255, 255, 0.58);-->
                             <div class="card-body px-4 py-5 px-md-5">
-                                <form id="myForm" class="needs-validation" novalidate>
+                                <form id="myForm" class="needs-validation" name="formsignup" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>" novalidate>
                                     <div class="d-flex align-items-center mb-3 pb-1">
                                         <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                         <span class="h1 fw-bold mb-0">Logo</span>
@@ -77,8 +122,10 @@
                                         <div class="form-outline form-group col-sm-12 mb-4">
                                             <label class="form-label" for=""><strong>What should we call
                                                     you?</strong></label>
-                                            <input type="text" id="UserId"class="form-control form-control-md" placeholder="Enter a profile name" pattern="^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$" required/>
-                                               
+                                            <input type="text" id="UserId"class="form-control form-control-md"  name="username"placeholder="Enter a profile name" pattern="^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$" required/>
+                                                <?php 
+                                                    if (!empty($obj)) {
+                                                        echo "<div id='resetalert' class='alert alert-danger bg-soft-danger border-0' role='alert'>This username already has a user</div>";}?>
                                                 <div class="invalid-feedback">Only contains alphanumeric characters, underscore and dot. <br>Number of characters must be between 8 to 20.</div>
                                         </div>
                                         <!-- <div class="form-outline form-group col-sm-7 mb-4">
@@ -96,19 +143,19 @@
                                         <div class="form-group form-outline   mb-4">
                                             <label class="form-label" for="">FirstName</label>
                                             <input type="text" id="FirstNameId"
-                                                class="form-control form-control-md" placeholder="FirstName" required  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$" />
+                                                class="form-control form-control-md" placeholder="FirstName" name="firstName" required  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$" />
                                             <div id="CheckName" class="invalid-feedback" style="color:red ;"> It should only contain letters, can be several words with spaces, and has a minimum of three characters, but a maximum at top 30 characters.</div>
                                         </div>
                                         <div class="form-outline form-group  mb-4">
                                             <label class="form-label" for="form2Example27">MiddleName</label>
                                             <input type="text" id="MiddleNameId"
-                                                class="form-control form-control-md" placeholder="Middlename"  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
+                                                class="form-control form-control-md" placeholder="Middlename" name="middleName"  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
                                                 <div id="CheckName" class="invalid-feedback" style="color:red ;"> It should only contain letters, can be several words with spaces, and has a minimum of three characters, but a maximum at top 30 characters.</div>
                                         </div>
                                         <div class="form-outline  form-group  mb-4">
                                             <label class="form-label" for="form2Example27">LastName</label>
                                             <input type="text" id="LastNameId"
-                                                class="form-control form-control-md" placeholder="Lastname"  required  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
+                                                class="form-control form-control-md" placeholder="Lastname" name="lastName" required  pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"/>
                                                 <div id="CheckName" class="invalid-feedback" style="color:red ;"> It should only contain letters, can be several words with spaces, and has a minimum of three characters, but a maximum at top 30 characters.</div>
                                         </div>
                                         
@@ -116,14 +163,21 @@
                                     
                                     <div class="form-outline  form-group mb-4">
                                         <label class="form-label" for=""><strong>What's your email?</strong></label>
-                                        <input type="email" id="EmailId" class="form-control form-control-md"
+                                        <input type="email" id="EmailId" name="gmail" class="form-control form-control-md"
                                             placeholder="Enter your email" required  pattern='^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'/>
-                                            <div class="invalid-feedback">Email invalidate!</div>
+                                            <div class="invalid-feedback">Email invalid!</div>
                                     </div>
+                                    <div class="form-outline  form-group mb-4">
+                                        <label class="form-label" for=""><strong>What's your phone number?</strong></label>
+                                        <input type="text" id="PhoneId" name="phone" class="form-control form-control-md"
+                                            placeholder="Enter your phone number" required  pattern='^(84|0[3|5|7|8|9])+([0-9]{8})\b$'/>
+                                            <div class="invalid-feedback">Phone invalid!</div>
+                                    </div>
+                                    <!-- /(84|0[3|5|7|8|9])+([0-9]{8})\b/     -->
                                     <div class="form-outline form-group mb-4">
                                         <label class="form-label" ><strong>Password</strong></label>
                                         <div class="input-group">
-                                            <input type="password" id="id_password" class="form-control form-control-md"
+                                            <input type="password" id="id_password" name="password" class="form-control form-control-md"
                                             placeholder="Create a password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"/>
                                             <span class="input-group-text" id="basic-addon2"> <i class="far fa-eye" id="togglePassword" style= "cursor: pointer;"></i></span>
                                             <div class="invalid-feedback">Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
@@ -155,7 +209,7 @@
                                                     <i class="fa fa-calendar">
                                                     </i>
                                                 </span>
-                                                <input class="form-control form-control-md" id="date" name="date"
+                                                <input class="form-control form-control-md" id="date" name="birthday"
                                                     placeholder="MM/DD/YYYY" type="text" required  pattern="^(1[0-2]|0?[1-9])/(3[01]|[12][0-9]|0?[1-9])/(?:[0-9]{2})?[0-9]{2}$"  style="border-bottom-right-radius:0.25rem ; border-top-right-radius:0.25rem ;"/>
                                                     <div  id="DateInvalid" class="invalid-feedback"></div>
                                                     <div  class="invalid-feedback">Invalid date</div>
@@ -166,7 +220,7 @@
                                             <label class="form-label" for="form2Example27"><strong>What's your
                                                     gender?</strong></label>
 
-                                            <select class="form-select" name="" id="selectgender" required
+                                            <select class="form-select" name="" id="selectgender" required name="gender"
                                                 class="form-control form-control-md">
                                                 <option selected value="Male">Gender</option>
                                                 <option value="Male">Male</option>
@@ -191,7 +245,7 @@
                                         </small>
                                     </div>
                                     <div class="pt-1 mb-4 form-group">
-                                            <input id="submitBtn" class="btn btn-dark btn-lg btn-block" type="submit" disabled placeholder="Sign up" />
+                                            <input id="submitBtn" class="btn btn-dark btn-lg btn-block" type="submit" disabled placeholder="Sign up" name="signup" />
                                     </div>
 
                                         <a class="small text-muted" href="resetpassword.php" style="text-decoration: none;">Forgot
@@ -268,7 +322,7 @@
         
         $('#UserId,#fileId,#FirstNameId,#LastNameId,#MiddleNameId,#id_password,#confirm_password').on('keyup', function () {
           
-          if ($('#UserId').val() != '' && $('#FirstNameId').val() != '' && $('#LastNameId').val() != '' && $('#MiddleNameId').val() != '' && $('#EmailId').val() != '' ) {
+          if ($('#UserId').val() != '' && $('#FirstNameId').val() != '' && $('#LastNameId').val() != ''  && $('#PhoneId').val() != '' && $('#MiddleNameId').val() != '' && $('#EmailId').val() != '' && $('#id_password').val() != '' && $('#EmailId').val() != '' &&$('#date').val() != '') {
             $("#submitBtn").attr("disabled",false);
             
             // $('#cPwdValid').show();
@@ -296,9 +350,9 @@
            
           });
           $('#date').on('keyup',function(){
-            console.log(YearNow)
+            // console.log(YearNow)
             var Split = $('#date').val().split("/");
-            console.log( $('#date').val())
+            // console.log( $('#date').val())
             if( $('#date').val() !=''){
                 $("#submitBtn").attr("disabled",false);
             }else{
@@ -341,8 +395,6 @@
           });
         });
       </script>
-<!--     <input class="form-control form-control-md" name="date"
-     placeholder="MM/DD/YYYY" type="datetime" required pattern="^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[0-2])\1(?:19|20)\d\d$" />-->
 </body>
 
 </html>

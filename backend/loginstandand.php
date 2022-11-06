@@ -41,10 +41,10 @@ if (!empty($_POST['signin'])) {
     </head>
     <body>
         <div class="background-radial-gradient overflow-hidden">
-            <div class="overlay overflow-hidden">
+            <div class="overlay overflow-hidden container">
                 <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-                    <div class="row gx-lg-5 align-items-center mb-5">
-                        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                    <!-- <div class="row gx-lg-5 align-items-center mb-5"> -->
+                        <!-- <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
                             <h1 class="my-5 display-5 fw-bold ls-tight" style="color:  hsl(218, 81%, 95%)">
                                 The best offer <br />
                                 <span style="color:  hsl(40, 16%, 96%)">for your music</span>
@@ -54,10 +54,10 @@ if (!empty($_POST['signin'])) {
                                 and in time of care and sorrow, will keep a fountain of joy alive in you.”
                                 <br><strong><i>Dietrich Bonhoeffer </i></strong>
                             </p>
-                        </div>
+                        </div> -->
 
-                        <div class=" col-lg-6 mb-5 mb-lg-0 position-relative">
-                            <div class="card bg-glass" style="border-radius: 1rem;">
+                        <!-- <div class=" col-lg-6 mb-5 mb-lg-0 position-relative">-->
+                            <div class="card bg-glass col-lg-6 mx-auto" style="border-radius: 1rem;">
                                 <div class="card-body px-4 py-5 px-md-5">
 
                                     <form action='<?php echo $_SERVER['PHP_SELF'] ?>' method='POST' >
@@ -68,7 +68,7 @@ if (!empty($_POST['signin'])) {
 
 
                                         <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; "><i class="bi bi-box-arrow-in-right"></i>
-                                            Sign into your account</h3>
+                                            Sign into Admin System</h3>
                                         <?php
                                         if (!empty($_POST['signin'])) {
                                             if (empty($obj)) {
@@ -80,7 +80,7 @@ if (!empty($_POST['signin'])) {
                                         }
                                         ?>
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for=""><strong>Username/Email address</strong></label>
+                                            <label class="form-label" for=""><strong>Username</strong></label>
                                             <input type="text" class="form-control form-control-md" id='fusername'  name='username' placeholder="Username or Email"/>
                                         </div>
                                         <div class="form-outline mb-4">
@@ -102,8 +102,8 @@ if (!empty($_POST['signin'])) {
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                       <!--  </div>
+                    </div> -->
                 </div>
             </div>
         </div>

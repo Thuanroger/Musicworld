@@ -20,7 +20,7 @@ class Events {
 					`Description`,
 					`EventName`,
 					`Flag`,
-					`MusicId`
+					`MusicTypeId`
 				)
 				VALUES
 				(
@@ -62,7 +62,7 @@ class Events {
 				SET		`Description` = :description,
 						`EventName` = :eventName,
 						`Flag` = :flag,
-						`MusicId` = :musicId
+						`MusicTypeId` = :musicId
 				WHERE	`EventId` = :eventId;";
 
 		// Prepare statement.
@@ -79,6 +79,33 @@ class Events {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateEvents2() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`events`
+				SET
+						`Flag` = :flag
+						
+				WHERE	`EventId` = :eventId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(	
+			":eventId" => $this->eventId,
+			":flag" => $this->flag,
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
+
 
 	public static function deleteEvents($eventId) {
 		// Connect to database.
@@ -111,7 +138,7 @@ class Events {
 						`EventId`,
 						`EventName`,
 						`Flag`,
-						`MusicId`
+						`MusicTypeId`
 				FROM	`events`
 				WHERE	`EventId` = :eventId;";
 
@@ -129,7 +156,7 @@ class Events {
 			$events->eventId = $row["EventId"];
 			$events->eventName = $row["EventName"];
 			$events->flag = $row["Flag"];
-			$events->musicId = $row["MusicId"];
+			$events->musicId = $row["MusicTypeId"];
 		}
 
 		// Close the database connection.
@@ -137,18 +164,33 @@ class Events {
 
 		return $events;
 	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`events`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`EventId`";
-		$sortColumns = Array("DESCRIPTION", "EVENTID", "EVENTNAME", "FLAG", "MUSICID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -181,9 +223,9 @@ class Events {
 						`EventId`,
 						`EventName`,
 						`Flag`,
-						`MusicId`
+						`MusicTypeId`
 				FROM	`events`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `EventId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.
@@ -200,8 +242,7 @@ class Events {
 			$events->eventId = $row["EventId"];
 			$events->eventName = $row["EventName"];
 			$events->flag = $row["Flag"];
-			$events->musicId = $row["MusicId"];
-
+			$events->musicId = $row["MusicTypeId"];
 			array_push($list, $events);
 		}
 

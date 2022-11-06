@@ -79,6 +79,31 @@ class Musicandartist {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateMusicandartist2() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`musicandartist`
+				SET		
+						`Flag` = :flag,		
+				WHERE	`MsA` = :msA;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			":flag" => $this->flag,
+			":msA" => $this->msA,
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+		return true;
+	}
 
 	public static function deleteMusicandartist($msA) {
 		// Connect to database.
@@ -138,17 +163,17 @@ class Musicandartist {
 		return $musicandartist;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-		// Validate sort column and order.
-		$defaultSortColumn = "`MsA`";
-		$sortColumns = Array("ARTISTID", "DESCRIPTION", "FLAG", "MSA", "MUSICTYPEID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		// // Validate sort column and order.
+		// $defaultSortColumn = "`MsA`";
+		// $sortColumns = Array("ARTISTID", "DESCRIPTION", "FLAG", "MSA", "MUSICTYPEID");
+		// $sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
+		// $sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -183,7 +208,7 @@ class Musicandartist {
 						`MsA`,
 						`MusicTypeId`
 				FROM	`musicandartist`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `MsA` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

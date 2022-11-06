@@ -97,6 +97,31 @@ class Album {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateAlbum1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`album`
+				SET		
+						`Flag` = :flag
+				WHERE	`AlbumId` = :albumId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			":albumId" => $this->albumId,
+			":flag" => $this->flag,
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+                 return true;
+	}
 
 	public static function deleteAlbum($albumId) {
 		// Connect to database.
@@ -161,18 +186,36 @@ class Album {
 
 		return $album;
 	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`album`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`AlbumId`";
-		$sortColumns = Array("ALBUMID", "ALBUMNAME", "DESCRIPTION", "FLAG", "LEVEL", "PICTURE", "PUBLISHERID", "STATUS");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		// $defaultSortColumn = "`AlbumId`";
+		// $sortColumns = Array("ALBUMID", "ALBUMNAME", "DESCRIPTION", "FLAG", "LEVEL", "PICTURE", "PUBLISHERID", "STATUS");
+		// $sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
+		// $sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -210,7 +253,7 @@ class Album {
 						`PublisherId`,
 						`Status`
 				FROM	`album`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `AlbumId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

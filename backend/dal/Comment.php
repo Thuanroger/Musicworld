@@ -91,6 +91,32 @@ class Comment {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateComment1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`comment`
+				SET		
+						`Flag` = :flag
+						
+				WHERE	`CommentId` = :commentId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(		
+			":commentId" => $this->commentId,
+			":flag" => $this->flag
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+	}
+
 
 	public static function deleteComment($commentId) {
 		// Connect to database.
@@ -153,18 +179,36 @@ class Comment {
 
 		return $comment;
 	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`comment`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`CommentId`";
-		$sortColumns = Array("ALBUMID", "ARTISTID", "COMMENTID", "CONTENT", "DESCRIPTION", "FLAG", "SONGID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		// $defaultSortColumn = "`CommentId`";
+		// $sortColumns = Array("ALBUMID", "ARTISTID", "COMMENTID", "CONTENT", "DESCRIPTION", "FLAG", "SONGID");
+		// $sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
+		// $sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -201,7 +245,7 @@ class Comment {
 						`Flag`,
 						`SongId`
 				FROM	`comment`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `CommentId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

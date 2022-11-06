@@ -107,6 +107,34 @@ class Usersystem {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateUsersystem1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`usersystem`
+				SET		
+						`Flag` = :flag
+						
+				WHERE	`UserSystemId` = :userSystemId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			
+			":flag" => $this->flag,
+			
+			":userSystemId" => $this->userSystemId
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+	}
+
 
 	public static function deleteUsersystem($userSystemId) {
 		// Connect to database.
@@ -229,18 +257,36 @@ class Usersystem {
 
 		return $usersystem;
 	}
+	Public static function getcount(){
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+		$sql = "SELECT	COUNT(*) AS Count
+				FROM	`usersystem`;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute();
+	;
+		// Get total records count.
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row['Count'];
+		$stmt = NULL;
+	}
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`UserSystemId`";
-		$sortColumns = Array("DESCRIPTION", "FLAG", "GMAIL", "PASSWORD", "PHONE", "PICTURE", "ROLE", "STATUS", "USERSYSTEMID", "USERSYSTEMNAME");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		// $defaultSortColumn = "`UserSystemId`";
+		// $sortColumns = Array("DESCRIPTION", "FLAG", "GMAIL", "PASSWORD", "PHONE", "PICTURE", "ROLE", "STATUS", "USERSYSTEMID", "USERSYSTEMNAME");
+		// $sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
+		// $sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -280,7 +326,7 @@ class Usersystem {
 						`UserSystemId`,
 						`UserSystemName`
 				FROM	`usersystem`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `UserSystemId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

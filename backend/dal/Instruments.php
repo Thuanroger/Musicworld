@@ -73,6 +73,32 @@ class Instruments {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateInstruments1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`instruments`
+				SET		
+						`Flag` = :flag,
+						
+				WHERE	`InstrumentId` = :instrumentId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(
+			
+			":flag" => $this->flag,
+			":instrumentId" => $this->instrumentId
+			));
+
+		// Close the database connection.
+		$conn = NULL;
+	}
 
 	public static function deleteInstruments($instrumentId) {
 		// Connect to database.
@@ -130,18 +156,14 @@ class Instruments {
 		return $instruments;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`InstrumentId`";
-		$sortColumns = Array("DESCRIPTION", "FLAG", "INSTRUMENTID", "INSTRUMENTNAME");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
-
+		
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
 
@@ -174,7 +196,7 @@ class Instruments {
 						`InstrumentId`,
 						`InstrumentName`
 				FROM	`instruments`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `InstrumentId` DESC
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

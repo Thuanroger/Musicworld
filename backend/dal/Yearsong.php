@@ -85,6 +85,27 @@ class Yearsong {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateYearsong1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+		// Update query.
+		$sql = "UPDATE	`yearsong`
+				SET		
+						`Flag` = :flag
+		
+				WHERE	`YearSongId` = :yearSongId;";
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+		// Execute the statement.
+		$stmt->execute(array(
+			":flag" => $this->flag,
+			":yearSongId" => $this->yearSongId));
+
+		// Close the database connection.
+		$conn = NULL;
+	}
 
 	public static function deleteYearsong($yearSongId) {
 		// Connect to database.
@@ -146,17 +167,14 @@ class Yearsong {
 		return $yearsong;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`YearSongId`";
-		$sortColumns = Array("DESCRIPTION", "FLAG", "SONGID", "VIEWS", "YEARNAME", "YEARSONGID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -192,7 +210,7 @@ class Yearsong {
 						`YearName`,
 						`YearSongId`
 				FROM	`yearsong`
-				ORDER BY $sortColumn $sortOrder
+				
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.

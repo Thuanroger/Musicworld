@@ -79,6 +79,32 @@ class Albumandsong {
 		// Close the database connection.
 		$conn = NULL;
 	}
+	public function updateAlbumandsong1() {
+		// Connect to database.
+		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
+
+		// Update query.
+		$sql = "UPDATE	`albumandsong`
+				SET		
+						`Flag` = :flag,
+		
+				WHERE	`ASId` = :aSId;";
+
+		// Prepare statement.
+		$stmt = $conn->prepare($sql);
+
+		// Execute the statement.
+		$stmt->execute(array(		
+			":aSId" => $this->aSId,
+
+			":flag" => $this->flag));
+
+		// Close the database connection.
+		$conn = NULL;
+                 return true;
+	}
 
 	public static function deleteAlbumandsong($aSId) {
 		// Connect to database.
@@ -138,17 +164,14 @@ class Albumandsong {
 		return $albumandsong;
 	}
 
-	public static function getAllRecords($pageNo, $pageSize, &$totalRecords, $sortColumn, $sortOrder) {
+	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
 		$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
 		// Validate sort column and order.
-		$defaultSortColumn = "`ASId`";
-		$sortColumns = Array("ALBUMID", "ASID", "DESCRIPTION", "FLAG", "SONGID");
-		$sortColumn = in_array(strtoupper($sortColumn), $sortColumns) ? "`$sortColumn`" : $defaultSortColumn;
-		$sortOrder = strcasecmp($sortOrder, "DESC") == 0 ? "DESC" : "ASC";
+		
 
 		$pageNo = (int)$pageNo;
 		$pageSize = (int)$pageSize;
@@ -183,7 +206,8 @@ class Albumandsong {
 						`Flag`,
 						`SongId`
 				FROM	`albumandsong`
-				ORDER BY $sortColumn $sortOrder
+				ORDER BY `AlbumId` DESC
+				
 				LIMIT $start, $pageSize;";
 
 		// Prepare statement.
