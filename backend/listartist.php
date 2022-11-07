@@ -104,8 +104,8 @@ if(!empty($_GET['del'])){
                                     <td> <?php echo $obj->description ?></td>
                                     <td>
                                         <div style='display:flex;'>
-                                            <a href="Admin.php?page=addartist&id=<?php echo $obj->songId; ?>" class='btn btn-info mr-1' id='updatef'><i class='i bi-arrow-repeat'></i></a>
-                                            <a href="../backend/delete/delartist.php?id=<?php echo $obj->songId; ?>&name=<?php echo  $obj->firstName." ". $obj->middleName." ".$obj->lastName ; ?>" class='btn btn-danger mr-1' id='deletef'><i class='bi bi-trash'></i></a>
+                                            <a href="Admin.php?page=addartist&id=<?php echo $obj->artistId; ?>" class='btn btn-info mr-1' id='updatef'><i class='i bi-arrow-repeat'></i></a>
+                                            <a href="../backend/delete/delartist.php?id=<?php echo $obj->artistId; ?>&name=<?php echo  $obj->firstName." ". $obj->middleName." ".$obj->lastName ; ?>" class='btn btn-danger mr-1' id='deletef'><i class='bi bi-trash'></i></a>
                                         </div>
                                     </td>
                                 </tr>                                            

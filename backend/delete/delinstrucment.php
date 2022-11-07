@@ -18,8 +18,8 @@ include '../dal/Instruments.php';
 
 <body>
   <?php
-  if (isset($_REQUEST['del']) and $_REQUEST['name'] != "") {
-    $id = $_GET['id'];
+  if (isset($_REQUEST['del']) and $_REQUEST['del'] != "" &&  isset($_REQUEST['name']) and $_REQUEST['name'] != "") {
+    $id = $_GET['del'];
     $name = $_GET['name'];
     $delete = new Instruments();
     $delete->songId = $id;
@@ -27,7 +27,7 @@ include '../dal/Instruments.php';
     $delete->updateInstruments1();
 
     if ($delete->updateInstruments1()) {
-      echo "<div id='resetalert' class='alert alert-success bg-soft-primary border-0 w-25 ms-1 mt-1' role='alert'>You delete  " . $id . " success.</div>
+      echo "<div id='resetalert' class='alert alert-success bg-soft-primary border-0 w-25 ms-1 mt-1' role='alert'>You delete  " . $del . " success.</div>
       <div class='ms-1'> <a href='/backend/Admin.php?page=addinstrucment'class='btn btn-info mb-1 ml-2 mt-1' id=''>Back</a></div>";
       // header("Location: /Eproject/backend/Admin.php?page=listsong");
     }

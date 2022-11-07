@@ -19,8 +19,7 @@ include '../dal/Publishers.php';
 <body>
   <?php
   if (isset($_REQUEST['del']) and $_REQUEST['del'] != "" && isset($_REQUEST['name']) and $_REQUEST['name'] != "" ) {
-    $id = $_GET['id'];
-   
+    $id = $_GET['del'];
     $delete = new Publishers();
     $delete->publisherid = $id;
     $delete->flag = 1;

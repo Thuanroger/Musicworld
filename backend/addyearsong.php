@@ -179,19 +179,18 @@ if (!empty($_POST['Insertf'])) {
                         <tbody>
 
                             <?php
-                            $pageNo = 1;
-                            $pageS = 1;
-
-                            if (!empty($_POST['reset'])) {
-                                $pageNo = $_POST['PageNo'];
-                                $pageS = $_POST['PageSize'];
-                            }
-                            $getdb = new Yearsong();
-                            $arr = $getdb->getAllRecords($pageNo, $pageS, $totalRecords);
-                            //                            $strTbl = "";
-                            //
-                            //                            $stt = 1;
-
+                              $page = 0;
+                              $getdb = new Yearsong();
+                              $limit = 8;
+                              $total_results = $getdb->getcount();
+                              $total_pages = ceil($total_results / $limit);
+  
+                              if (!isset($_GET['pageno'])) {
+                                  $page = 1;
+                              } else {
+                                  $page = $_GET['pageno'];
+                              }
+                              $arr = $getdb->getAllRecords($page, 8, $totalRecords);
                             for ($i = 0; $i < count($arr); $i++) {
                                 $obj = $arr[$i];
                             ?>
@@ -223,13 +222,36 @@ if (!empty($_POST['Insertf'])) {
 
                         </tbody>
                     </table>
-                    <?php
-                    if (!empty($_POST['reset'])) {
-                        echo "Page : " . $pageNo . " " . "Size: " . $pageS;
-                    };
-                    ?>
+                   
                 </div>
-
+                <div class="">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] ?>?page=addyearsong&<?php if ($page > 1) {
+                                                                                                                echo 'pageno=' . ($page - 1);
+                                                                                                            } ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <?php
+                            for ($pag = 1; $pag <= $total_pages; $pag++) { ?>
+                                <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] ?>?page=addyearsong&<?php echo "pageno=$pag"; ?>"><?php echo $pag; ?></a></li>
+                            <?php } ?>
+                            <li class="page-item">
+                                <a class="page-link" href="Admin.php?page=addyearsong&<?php if ($page > 1) {
+                                                                                        echo 'pageno=' . ($page + 1);
+                                                                                    } ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            <li class="page-item ml-4 btn btn-info">Page : <?php echo $page; ?></li>
+                            <li class="page-item ml-1 btn btn-info">Total : <?php echo  $total_results; ?></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>

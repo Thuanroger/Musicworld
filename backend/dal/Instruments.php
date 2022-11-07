@@ -155,7 +155,26 @@ class Instruments {
 
 		return $instruments;
 	}
+	
+Public static function getcount(){
+	$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+	$dsn = "mysql:host=" . DatabaseInfo::getServer() . ";dbname=" . DatabaseInfo::getDatabaseName() . ";charset=utf8";
+	$conn = new PDO($dsn, DatabaseInfo::getUserName(), DatabaseInfo::getPassword(), $options);
 
+	$sql = "SELECT	COUNT(*) AS Count
+			FROM	`instruments`;";
+
+	// Prepare statement.
+	$stmt = $conn->prepare($sql);
+
+	// Execute the statement.
+	$stmt->execute();
+;
+	// Get total records count.
+	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $row['Count'];
+	$stmt = NULL;
+}
 	public static function getAllRecords($pageNo, $pageSize, &$totalRecords) {
 		// Connect to database.
 		$options = array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);

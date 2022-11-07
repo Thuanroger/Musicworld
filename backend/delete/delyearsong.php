@@ -19,7 +19,7 @@ include '../dal/Yearsong.php';
 <body>
   <?php
   if (isset($_REQUEST['del']) and $_REQUEST['del'] != "" && isset($_REQUEST['name']) and $_REQUEST['name'] != "") {
-    $id = $_GET['id'];
+    $id = $_GET['del'];
     $name = $_GET['name'];
     $delete = new Yearsong();
     $delete->songId = $id;

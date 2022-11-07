@@ -19,7 +19,7 @@ include '../dal/Musicandartist.php';
 <body>
   <?php
   if (isset($_REQUEST['del']) and $_REQUEST['del'] != "" ) {
-    $id = $_GET['id'];
+    $id = $_GET['del'];
     
     $delete = new Musicandartist();
     $delete->songId = $id;
@@ -27,7 +27,7 @@ include '../dal/Musicandartist.php';
     $delete->updateMusicandartist2();
 
     if ($delete->updateMusicandartist2()) {
-      echo "<div id='resetalert' class='alert alert-success bg-soft-primary border-0 w-25 ms-1 mt-1' role='alert'>You delete  " . $id. " success.</div>
+      echo "<div id='resetalert' class='alert alert-success bg-soft-primary border-0 w-25 ms-1 mt-1' role='alert'>You delete id " . $del. " success.</div>
       <div class='ms-1'> <a href='/backend/Admin.php?page=addmusicandartist'class='btn btn-info mb-1 ml-2 mt-1' id=''>Back</a></div>";
       // header("Location: /Eproject/backend/Admin.php?page=listsong");
     }

@@ -131,8 +131,18 @@ if (!empty($_POST['Insertf'])) {
 
                             <?php
                          
-                            $getdb = new Songandartist();
-                            $arr = $getdb->getAllRecords($page,7, $totalRecords);
+                         $page = 0;
+                         $getdb = new Songandartist();
+                         $limit = 8;
+                         $total_results = $getdb->getcount();
+                         $total_pages = ceil($total_results / $limit);
+
+                         if (!isset($_GET['pageno'])) {
+                             $page = 1;
+                         } else {
+                             $page = $_GET['pageno'];
+                         }
+                         $arr = $getdb->getAllRecords($page, 8, $totalRecords);
 
                          
                             for ($i = 0; $i < count($arr); $i++) {
@@ -167,7 +177,34 @@ if (!empty($_POST['Insertf'])) {
                     </table>
 
                 </div>
-
+                <div class="">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] ?>?page=addsongandartist&<?php if ($page > 1) {
+                                                                                                                echo 'pageno=' . ($page - 1);
+                                                                                                            } ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <?php
+                            for ($pag = 1; $pag <= $total_pages; $pag++) { ?>
+                                <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] ?>?page=addsongandartist&<?php echo "pageno=$pag"; ?>"><?php echo $pag; ?></a></li>
+                            <?php } ?>
+                            <li class="page-item">
+                                <a class="page-link" href="Admin.php?page=addsongandartist&<?php if ($page > 1) {
+                                                                                        echo 'pageno=' . ($page + 1);
+                                                                                    } ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            <li class="page-item ml-4 btn btn-info">Page : <?php echo $page; ?></li>
+                            <li class="page-item ml-1 btn btn-info">Total : <?php echo  $total_results; ?></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>

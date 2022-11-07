@@ -320,7 +320,7 @@ if (!empty($_POST['Insertf'])) {
                                     <td>
                                         <div class="text-center" style='display:flex;'>
                                             <a href="Admin.php?page=addadmi&id=<?php echo $obj->$publisherid; ?>" class='btn btn-info mr-1' id='updatef'><i class='i bi-arrow-repeat'></i></a>
-                                            <a href="../backend/delete/deladmin.php?del=<?php echo $obj->$publisherid; ?>&name=<?php echo  $obj->$publisherName; ?>" class='btn btn-danger' id='deletef'><i class='bi bi-trash'></i></a>
+                                            <a href="../backend/delete/deladmin.php?del=<?php echo $obj->userSystemId; ?>&name=<?php echo  $obj->userSystemName; ?>" class='btn btn-danger' id='deletef'><i class='bi bi-trash'></i></a>
                                         </div>
                                     </td>
                                 </tr>
